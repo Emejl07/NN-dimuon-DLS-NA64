@@ -1,16 +1,19 @@
-# NN-dimuon-DLS-NA64
+# Scalar Dark Matter Study at NA64
 
-This repository contains the code and data for my master's thesis, which studies scalar dark matter at NA64. The research includes both traditional selection of events and neural network (NN) trained models to analyze the data.
+Welcome to the repository for the Master's thesis project focused on studying scalar dark matter at the NA64 experiment. This research project incorporates both traditional event selection techniques and state-of-the-art neural network (NN) models to analyze experimental data and gain insights into scalar dark matter interactions.
 
-## Overview
+## About NA64
 
-The NA64 experiment aims to search for dark matter and other new physics phenomena using a high-energy electron beam. This thesis focuses on the investigation of scalar dark matter particles produced in the NA64 experiment.
+NA64 is a particle physics experiment located at CERN designed to explore the existence of new, weakly interacting particles such as dark matter. By using high-energy electron beams, NA64 aims to probe the existence of hidden sector particles that interact very weakly with ordinary matter.
 
-### Key Components
+## Project Overview
 
-- **Traditional Event Selection**: Implements classical methods to select events that are consistent with the expected signature of scalar dark matter particles.
-- **Neural Network Models**: Utilizes machine learning techniques to train models that can identify potential scalar dark matter events with higher accuracy and efficiency.
+This repository contains the code and resources used for analyzing data related to scalar dark matter interactions at NA64. The project involves:
 
-## Repository Structure
+- **Traditional Event Selection:** Implementing established techniques for selecting relevant events from experimental data. These methods are crucial for identifying potential signals of scalar dark matter interactions amidst background noise.
 
+- **Neural Network Models:** Developing and training neural network models to enhance event selection and improve the sensitivity of the analysis. Neural networks offer a powerful tool for pattern recognition and can significantly augment the capabilities of traditional analysis methods.
 
+## More Information
+
+For additional information about the NA64 experiment and related research, please visit the [NA64 website](https://na64.web.cern.ch/) and explore the relevant publications and resources.
