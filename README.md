@@ -1,10 +1,10 @@
 # Scalar Dark Matter Study at NA64
 
-Welcome to the repository for the Master's thesis project focused on studying scalar dark matter at the NA64 experiment. This research project incorporates both traditional event selection techniques and state-of-the-art neural network (NN) models to analyze experimental data and gain insights into scalar dark matter interactions.
+Welcome to the repository for the Master's thesis project focused on studying scalar dark matter at the NA64 experiment. This research project incorporates both traditional event selection techniques and neural network (NN) models to analyze experimental data and gain insights into scalar dark matter interactions.
 
 ## About NA64
 
-NA64 is a particle physics experiment located at CERN designed to explore the existence of new, weakly interacting particles such as dark matter. By using high-energy electron beams, NA64 aims to probe the existence of hidden sector particles that interact very weakly with ordinary matter.
+NA64 is a particle physics experiment located at CERN designed to explore the existence of new, weakly interacting dark matter particles. By using high-energy electron beams, NA64 aims to probe the existence of hidden sector particles that interact very weakly with ordinary matter.
 
 ## Project Overview
 
