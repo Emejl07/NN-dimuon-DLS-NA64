@@ -21,7 +21,8 @@ def load_data(file_path, treeName):
 def preprocess_data(df):
     # Convert DataFrame to numpy arrays
     features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"]].values
-    return features
+    indices = df.index.values
+    return features, indices
 
 def load_model(filename):
     # Load the model state dictionary
@@ -37,7 +38,7 @@ def main():
     model = load_model("models/dimuon_selection_model.pt")
 
     # Preprocess data
-    features = preprocess_data(df_dimuon)
+    features, indices = preprocess_data(df_dimuon)
 
     # Convert features to PyTorch tensor
     X_tensor = torch.Tensor(features)
@@ -50,7 +51,18 @@ def main():
     # Filter predicted dimuon events (label = 1)
     dimuon_indices = predictions[:, 0] > 0.5
     dimuon_features = features[dimuon_indices]
+    selected_indices = indices[dimuon_indices]
     print(r"Number of $\mu\mu$: %2i", len(dimuon_features))
+
+    pd.DataFrame(selected_indices, columns=["index"]).to_csv("Selected_Indices.csv", index=False)
+
+    selected_data = pd.DataFrame(dimuon_features, columns=["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"])
+    selected_data["index"] = selected_indices
+    selected_data.to_csv("selected_data.csv", index=False)
+
+    # Save the selected indices along with the features
+    np.save('NN_Selected_experiment.npy', dimuon_features)
+    np.save('Selected_Indices.npy', selected_indices)
 
     # Create subplots
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
@@ -73,11 +85,9 @@ def main():
     axes[2].set_xlim(0, 20)
 
     # Adjust layout
-    strawindicies = dimuon_features[:, 6] == 20
-    print(len(dimuon_features[strawindicies]))
+    straw_indices = dimuon_features[:, 6] == 20
+    print(len(dimuon_features[straw_indices]))
 
-    np.save('NN_Selected_experiment.npy', dimuon_features)
- 
     plt.tight_layout()
     plt.savefig("NN_results.pdf")
     plt.show()
