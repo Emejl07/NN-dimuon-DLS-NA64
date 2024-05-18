@@ -412,7 +412,7 @@ void create_experimentSet(string fIn = "", string fOut = "") {
     //
 
     std::string fnameIn = (fIn == "") ? "/afs/cern.ch/work/e/ezaya/public/data_partblinded_pass5_small/job008747.root" : fIn;  // Data set of Dimuons
-    std::string fnameOut = (fOut == "") ? "experimentSet_out.root" : fOut;
+    std::string fnameOut = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/experimentSet_out.root" : fOut;
 
     // Define the RDataFrame with the input ROOT file
     ROOT::RDataFrame d0("tout", fnameIn.c_str());

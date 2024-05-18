@@ -31,11 +31,11 @@ def load_model(filename):
 
 def main():
     # Load dimuon data
-    file_dimuon = "experimentSet_out.root"
+    file_dimuon = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/experimentSet_out.root"
     df_dimuon = load_data(file_dimuon, "training_set")
     
     # Load trained model
-    model = load_model("models/dimuon_selection_model.pt")
+    model = load_model("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Models/dimuon_selection_model.pt")
 
     # Preprocess data
     features, indices = preprocess_data(df_dimuon)
@@ -54,15 +54,12 @@ def main():
     selected_indices = indices[dimuon_indices]
     print(r"Number of $\mu\mu$: %2i", len(dimuon_features))
 
-    pd.DataFrame(selected_indices, columns=["index"]).to_csv("Selected_Indices.csv", index=False)
+    pd.DataFrame(selected_indices, columns=["index"]).to_csv("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/Selected_Indices.csv", index=False)
 
     selected_data = pd.DataFrame(dimuon_features, columns=["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"])
     selected_data["index"] = selected_indices
-    selected_data.to_csv("selected_data.csv", index=False)
-
-    # Save the selected indices along with the features
-    np.save('NN_Selected_experiment.npy', dimuon_features)
-    np.save('Selected_Indices.npy', selected_indices)
+    selected_data.to_csv("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/selected_data.csv", index=False)
+    np.save('/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/NN_Selected_experiment.npy', dimuon_features)
 
     # Create subplots
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
@@ -89,7 +86,7 @@ def main():
     print(len(dimuon_features[straw_indices]))
 
     plt.tight_layout()
-    plt.savefig("NN_results.pdf")
+    plt.savefig("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Plots/NN_results.pdf")
     plt.show()
 
 if __name__ == "__main__":

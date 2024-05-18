@@ -109,8 +109,8 @@ void create_SimulationSet(string fIn = "", string fOut = "") {
     // DIMUON EVENTS DATA
     //
 
-    std::string fnameIn = (fIn == "") ? "./../../DIMUONS/data/25042024_MM_real_seperated_beamtime.root" : fIn;  // Data set of Dimuons
-    std::string fnameOut = (fOut == "") ? "SimulationSet_dimuon_out.root" : fOut;
+    std::string fnameIn = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/25042024_MM_real_seperated_beamtime.root" : fIn;  // Data set of Dimuons
+    std::string fnameOut = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/SimulationSet_dimuon_out.root" : fOut;
 
     // Define the RDataFrame with the input ROOT file
     ROOT::RDataFrame d0("ana_tree", fnameIn);

@@ -109,8 +109,8 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
     // DIMUON EVENTS DATA
     //
 
-    std::string fnameIn = (fIn == "") ? "./../../DIMUONS/data/09042024_TrueDetector_beforeMagnet.root" : fIn;  // Data set of Dimuons
-    std::string fnameOut = (fOut == "") ? "TrainingSet_dimuon_out.root" : fOut;
+    std::string fnameIn = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/09042024_TrueDetector_beforeMagnet.root" : fIn;  // Data set of Dimuons
+    std::string fnameOut = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_dimuon_out.root" : fOut;
 
     // Define the RDataFrame with the input ROOT file
     ROOT::RDataFrame d0("ana_tree", fnameIn);
@@ -145,8 +145,8 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
     // PION EVENTS DATA
     //
 
-    std::string fnameIn_pion = (fIn == "") ? "./../../PION/data/pion-2023A.root" : fIn; // "./../old_simulations/Dimuons250224_15.root" : fIn; // Data set of Dimuons
-    std::string fnameOut_pion = (fOut == "") ? "TrainingSet_pion_out.root" : fOut;
+    std::string fnameIn_pion = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/PION/data/pion-2023A.root" : fIn; // "./../old_simulations/Dimuons250224_15.root" : fIn; // Data set of Dimuons
+    std::string fnameOut_pion = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_pion_out.root" : fOut;
 
     // Define the RDataFrame with the input ROOT file
     ROOT::RDataFrame d0_pion("ana_tree", fnameIn_pion);
@@ -179,8 +179,8 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
     // KAON EVENTS DATA
     //
 
-    std::string fnameIn_kaon = (fIn == "") ? "./../../KAON/data/kaon-2023A.root" : fIn; // Dataset of Kaons
-    std::string fnameOut_kaon = (fOut == "") ? "TrainingSet_kaon_out.root" : fOut;
+    std::string fnameIn_kaon = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/KAON/data/kaon-2023A.root" : fIn; // Dataset of Kaons
+    std::string fnameOut_kaon = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_kaon_out.root" : fOut;
 
     // Define the RDataFrame with the input ROOT file
     ROOT::RDataFrame d0_kaon("ana_tree", fnameIn_kaon);
@@ -214,8 +214,8 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
     // COMMON EVENTS: NO HITS IN HCAL
     //
     
-    std::string fnameIn_all = (fIn == "") ? "./../../DIMUONS/data/02042024_standard.root" : fIn; // Dataset of all events, not only dimuons
-    std::string fnameOut_all = (fOut == "") ? "TrainingSet_common_out.root" : fOut; // Create a seperate out-file, seperating the dimuon out-file.
+    std::string fnameIn_all = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/02042024_standard.root" : fIn; // Dataset of all events, not only dimuons
+    std::string fnameOut_all = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root" : fOut; // Create a seperate out-file, seperating the dimuon out-file.
 
     // Define the RDataFrame with the input ROOT file
     ROOT::RDataFrame d0_all("ana_tree", fnameIn_all);

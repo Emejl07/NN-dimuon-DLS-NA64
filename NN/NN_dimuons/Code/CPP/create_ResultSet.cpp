@@ -11,10 +11,10 @@
 
 void create_ResultSet(std::string fIn = "", std::string fOut = "") {
     std::string fnameIn = (fIn == "") ? "/afs/cern.ch/work/e/ezaya/public/data_partblinded_pass5_small/job008747.root" : fIn;
-    std::string fnameOut = (fOut == "") ? "NN_Selected_experimentSet.root" : fOut;
+    std::string fnameOut = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/NN_Selected_experimentSet.root" : fOut;
 
     // Load selected indices from CSV file
-    std::ifstream file("Selected_Indices.csv");
+    std::ifstream file("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/Selected_Indices.csv");
     if (!file.is_open()) {
         std::cerr << "Error opening file!" << std::endl;
         return;

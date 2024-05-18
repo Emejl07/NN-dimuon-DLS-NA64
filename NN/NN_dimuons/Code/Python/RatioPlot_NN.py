@@ -13,7 +13,7 @@ def RatioPlot(npy_file, histogramNameSim, filename, title, xmin, xmax):
     histExp, binsExp = np.histogram(dimuon_features[:,3], bins=65, range=(xmin, xmax), density=False)
     
     # Open the ROOT file and access the histogram for simulation data
-    file_sim = uproot.open("job008747_out.root") # Use experimental data
+    file_sim = uproot.open("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/job008747_out.root") # Use experimental data
     #file_sim = uproot.open("./../../DIMUONS/data/25042024_MM_real_seperated_beamtime_out.root") # Use simulated data
     histSim = file_sim[histogramNameSim].to_numpy()
     
@@ -99,4 +99,4 @@ def RatioPlot(npy_file, histogramNameSim, filename, title, xmin, xmax):
     plt.show()
 
 # Example usage:
-RatioPlot("NN_Selected_experiment.npy", "Dimuons/HCAL2_11_T_18", "HCAL2_RatioPlot_Exp.pdf", r"Central cell of HCAL$_2$", 0, 20)
+RatioPlot("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/NN_Selected_experiment.npy", "Dimuons/HCAL2_11_T_18", "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Plots/HCAL2_RatioPlot_Exp.pdf", r"Central cell of HCAL$_2$", 0, 20)
