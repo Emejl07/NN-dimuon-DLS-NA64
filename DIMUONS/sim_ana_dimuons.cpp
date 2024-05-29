@@ -806,9 +806,10 @@ std::vector<ROOT::RDF::RResultPtr<TH1>> doHisto(ROOT::RDF::RNode df, int icut, s
   df = df.Define("mpStrawRecon12Y", StrawMultHist, { "Strawy12" });
 
   // Dimuon information
- ret.push_back(df.Histo1D( { Form("DIMU_Etot_%i", icut), "DIMU_Etot", 100u, 0., 100.}, "DIMU_Etot"));
- ret.push_back(df.Histo1D( { Form("DIMUp_E_%i", icut), "DIMUp_E", 100u, 0., 100.}, "DIMUp_E"));
- ret.push_back(df.Histo1D( { Form("DIMUn_E_%i", icut), "DIMUn_E", 100u, 0., 100.}, "DIMUn_E"));
+  ret.push_back(df.Histo1D( { Form("DIMU_Etot_%i", icut), "DIMU_Etot", 100u, 0., 100.}, "DIMU_Etot"));
+  ret.push_back(df.Histo1D( { Form("DIMUp_E_%i", icut), "DIMUp_E", 100u, 0., 100.}, "DIMUp_E"));
+  ret.push_back(df.Histo1D( { Form("DIMUn_E_%i", icut), "DIMUn_E", 100u, 0., 100.}, "DIMUn_E"));
+  ret.push_back(df.Histo1D( { Form("DIMU_NDimuonsTrue_%i", icut), "DIMU_NDimuonsTrue", 100u, 0., 4.}, "DIMU_NDimuonsTrue"));
 
   //Straw multiplicity
   ret.push_back(df.Histo1D( { Form("mpStraw3X_%i", icut), "mpStraw3X", 20u, -0.5,19.5}, "mpStraw3X"));
@@ -825,10 +826,10 @@ std::vector<ROOT::RDF::RResultPtr<TH1>> doHisto(ROOT::RDF::RNode df, int icut, s
   ret.push_back(df.Histo1D( { Form("Straw5Y_%i", icut), "Straw5Y", 200u, -100., 100.}, "Strawy5"));
   ret.push_back(df.Histo1D( { Form("Straw6X_%i", icut), "Straw6X", 200u, -100., 100.}, "Strawx6"));
   ret.push_back(df.Histo1D( { Form("Straw6Y_%i", icut), "Straw6Y", 200u, -100., 100.}, "Strawy6"));
-  ret.push_back(df.Histo1D( { Form("Straw11X_%i", icut), "Straw11X", 300u, -600., 600.}, "Strawx11"));
-  ret.push_back(df.Histo1D( { Form("Straw11Y_%i", icut), "Straw11Y", 300u, -600., 600.}, "Strawy11"));
-  ret.push_back(df.Histo1D( { Form("Straw12X_%i", icut), "Straw12X", 300u, -600., 600.}, "Strawx12"));
-  ret.push_back(df.Histo1D( { Form("Straw12Y_%i", icut), "Straw12Y", 300u, -600., 600.}, "Strawy12"));
+  ret.push_back(df.Histo1D( { Form("Straw11X_%i", icut), "Straw11X", 100u, -600., 600.}, "Strawx11"));
+  ret.push_back(df.Histo1D( { Form("Straw11Y_%i", icut), "Straw11Y", 100u, -600., 600.}, "Strawy11"));
+  ret.push_back(df.Histo1D( { Form("Straw12X_%i", icut), "Straw12X", 100u, -600., 600.}, "Strawx12"));
+  ret.push_back(df.Histo1D( { Form("Straw12Y_%i", icut), "Straw12Y", 100u, -600., 600.}, "Strawy12"));
   ret.push_back(df.Histo1D( { Form("Straw11X_true_%i", icut), "Straw11X true", 200u, -1500., 0.}, "Strawx11_truth"));
   //ret.push_back(df.Histo1D( { Form("Straw11Y_true_%i", icut), "Straw11Y true", 200u, -600., 600.}, "Strawy11_truth"));
   ret.push_back(df.Histo1D( { Form("Straw12X_true_%i", icut), "Straw12X true", 200u, -1500., 0.}, "Strawx12_truth"));
