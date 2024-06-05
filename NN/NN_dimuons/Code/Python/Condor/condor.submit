@@ -11,13 +11,10 @@ notification = Error
 #switch off the transfering of output file
 transfer_output_files = ""
 
-JOBNAME = 01062024_2023setup
-output = /afs/cern.ch/work/e/ezaya/public/sim_data_verbose//output/$(JOBNAME).$(ClusterId).$(ProcId).out
-error = /afs/cern.ch/work/e/ezaya/public/sim_data_verbose//error/$(JOBNAME).$(ClusterId).$(ProcId).err
-log = /afs/cern.ch/work/e/ezaya/public/sim_data_verbose//log/$(JOBNAME).$(ClusterId).log
-
+output     = /afs/cern.ch/user/e/ezaya/logs/job_output_$(ClusterId).$(ProcId).log
+error      = /afs/cern.ch/user/e/ezaya/logs/job_error_$(ClusterId).$(ProcId).log
+log        = /afs/cern.ch/user/e/ezaya/logs/job_$(ClusterId).log
 +JobFlavour = "tomorrow"
-
 
 #requirement for the simulation
 requirements = (OpSysAndVer =?= "AlmaLinux9") && (Machine =!= LastRemoteHost)
@@ -25,9 +22,7 @@ requirements = (OpSysAndVer =?= "AlmaLinux9") && (Machine =!= LastRemoteHost)
 # No more emails
 notification=never
 
-executable = geant4_run.sh 
+executable = run_job.sh
 
-arguments = $(JOBNAME)_$(ClusterId)_$(ProcId)
-
-queue 1000
+queue
 
