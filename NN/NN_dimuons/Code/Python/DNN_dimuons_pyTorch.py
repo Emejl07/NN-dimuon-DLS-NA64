@@ -49,7 +49,7 @@ def preprocess_data(df):
     labels = df["IsDimuon"].values
     return features, labels
 
-def train_model(model, X_train, y_train, X_test, y_test, criterion, optimizer, num_epochs=200, stopping_threshold=1e-7):
+def train_model(model, X_train, y_train, X_test, y_test, criterion, optimizer, num_epochs=1300, stopping_threshold=1e-7):
     X_train_tensor = torch.Tensor(X_train)
     y_train_tensor = torch.Tensor(y_train).unsqueeze(1)
     X_test_tensor = torch.Tensor(X_test)
@@ -173,7 +173,7 @@ def main():
     file_common = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root"
     file_pion = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_pion_out.root"
     file_kaon = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_kaon_out.root"
-    num_samples = 400 # Max value: 556279
+    num_samples = 400000 # Max value: 556279
     df_dimuon = load_data(file_dimuon, num_samples, "training_set")
     df_all = load_data(file_common, num_samples, "training_set")
     df_pion = load_data(file_pion, num_samples, "training_set")

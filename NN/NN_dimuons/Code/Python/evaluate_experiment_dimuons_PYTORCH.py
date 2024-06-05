@@ -21,7 +21,7 @@ def load_data(file_path, treeName):
 
 def preprocess_data(df):
     # Convert DataFrame to numpy arrays
-    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"]].values
+    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"]].values
     indices = df.index.values
     return features, indices
 
@@ -36,7 +36,7 @@ def main():
     df_dimuon = load_data(file_dimuon, "training_set")
     
     # Load trained model
-    model = load_model("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Models/dimuon_selection_model.pt")
+    model = load_model("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Models/dimuon_selection_model_test.pt")
 
     # Preprocess data
     features, indices = preprocess_data(df_dimuon)
@@ -59,7 +59,7 @@ def main():
 
     pd.DataFrame(selected_indices, columns=["index"]).to_csv("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/Selected_Indices.csv", index=False)
 
-    selected_data = pd.DataFrame(dimuon_features, columns=["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"])
+    selected_data = pd.DataFrame(dimuon_features, columns=["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"])
     selected_data["index"] = selected_indices
     selected_data.to_csv("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/selected_data.csv", index=False)
     np.save('/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Input/NN_Selected_experiment.npy', dimuon_features)

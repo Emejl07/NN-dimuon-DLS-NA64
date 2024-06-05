@@ -21,7 +21,7 @@ def load_data(file_path, treeName):
 def preprocess_data(df):
     # Convert DataFrame to numpy arrays
     # features = ["eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"]
-    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"]].values
+    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"]].values
     #labels = df["IsDimuon"].values
     return features
 
