@@ -124,7 +124,7 @@ def plot_loss_and_accuracy_curve(loss_curve, train_acc_curve, test_acc_curve):
     leg2 = ax2.legend(fontsize=18, loc="center right")
     leg2.get_frame().set_edgecolor('none')
     leg2.get_frame().set_facecolor('none')
-    plt.savefig("loss_and_accuracy_curve_test.pdf")
+    plt.savefig("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Plots/loss_and_accuracy_curve_test.pdf")
     plt.show()
 
 def plot_roc_curve(y_test, y_scores, accuracy):
@@ -147,7 +147,7 @@ def plot_roc_curve(y_test, y_scores, accuracy):
     leg.get_frame().set_edgecolor('none')
     leg.get_frame().set_facecolor('none')
     plt.tight_layout()
-    plt.savefig("ROC_curve_test.pdf")
+    plt.savefig("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Plots/ROC_curve_test.pdf")
     plt.show()
 
 def plot_signal_background_histogram(y_test, y_scores):
@@ -164,7 +164,7 @@ def plot_signal_background_histogram(y_test, y_scores):
     leg.get_frame().set_edgecolor('none')
     leg.get_frame().set_facecolor('none')
     plt.tight_layout()
-    plt.savefig("signal_background_histogram_test.pdf")
+    plt.savefig("/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Plots/signal_background_histogram_test.pdf")
     plt.show()
 
 def main():
