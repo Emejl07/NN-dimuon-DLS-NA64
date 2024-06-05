@@ -169,6 +169,7 @@ def plot_signal_background_histogram(y_test, y_scores):
 
 def main():
     # Load data
+    print("Loading trainingset...")
     file_dimuon = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_dimuon_out.root"
     file_common = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root"
     file_pion = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_pion_out.root"
@@ -181,6 +182,7 @@ def main():
     df = pd.concat([df_dimuon, df_pion, df_kaon])
 
     # Preprocess data
+    print("Preprocessing data...")
     features, labels = preprocess_data(df)
     
     # Split the data into training and testing sets
@@ -195,24 +197,29 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     # Train the model
+    print("Training model...")
     trained_model, loss_curve, train_acc_curve, test_acc_curve = train_model(model, X_train, y_train, X_test, y_test, criterion, optimizer)
 
     # Evaluate the model
     test_acc = evaluate_model(trained_model, X_test, y_test)
     
     # Calculate ROC curve
+    print("Plotting ROC curve...")
     X_test_tensor = torch.Tensor(X_test)
     outputs = trained_model(X_test_tensor)
     y_scores = outputs.detach().numpy()
     plot_roc_curve(y_test, y_scores, test_acc)
     
     # Plot loss and accuracy curves
+    print("Plotting loss curve...")
     plot_loss_and_accuracy_curve(loss_curve, train_acc_curve, test_acc_curve)
     
     # Plot signal vs background histogram
+    print("Plotting signal vs background")
     plot_signal_background_histogram(y_test, y_scores)
     
     # Save model
+    print("Saving model...")
     torch.save(trained_model, "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Models/dimuon_selection_model_test.pt")
 
 if __name__ == "__main__":
