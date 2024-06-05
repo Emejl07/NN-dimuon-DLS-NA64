@@ -44,7 +44,8 @@ def load_data(file_path, num_samples, treeName):
     return df
 
 def preprocess_data(df):
-    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"]].values
+    #features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"]].values
+    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"]].values
     labels = df["IsDimuon"].values
     return features, labels
 
@@ -172,7 +173,7 @@ def main():
     file_common = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root"
     file_pion = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_pion_out.root"
     file_kaon = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_kaon_out.root"
-    num_samples = 40000 # Max value: 556279
+    num_samples = 400 # Max value: 556279
     df_dimuon = load_data(file_dimuon, num_samples, "training_set")
     df_all = load_data(file_common, num_samples, "training_set")
     df_pion = load_data(file_pion, num_samples, "training_set")
