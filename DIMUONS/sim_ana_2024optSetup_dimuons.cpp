@@ -780,7 +780,7 @@ double SeperationMunST(vector<double> &strawX, vector<int> &straw_PDGID) {
       }
     }
   }
-  return abs(mun_X + 750.);
+  return abs(mun_X + 726.);
 }
 
 double SeperationMupST(vector<double> &strawX, vector<int> &straw_PDGID) {
@@ -795,7 +795,7 @@ double SeperationMupST(vector<double> &strawX, vector<int> &straw_PDGID) {
       }
     }
   }
-  return abs(mup_X + 750.);
+  return abs(mup_X + 726.);
 }
 
 double TrackEnergyDimuonsST(vector<double> &Straw_TrackEnergy, vector<int> &straw_PDGID) {
@@ -859,7 +859,7 @@ double TrackEnergyDimuonsMM(vector<double> &MM_TrackEnergy, vector<int> &MM_PDGI
   bool mup_found = false;
   bool mun_found = false;
 
-  if(mpMM > 1){
+  if(mpMM > 0){
     for(int i = 0; i < mpMM; ++i){
       if(MM_PDGID[i] == -13 && mup_found == false){
         mup_found = true;
@@ -1005,12 +1005,12 @@ std::vector<ROOT::RDF::RResultPtr<TH1>> doHisto(ROOT::RDF::RNode df, int icut, s
   df = df.Define("TrackEnergyMM7_mun", TrackEnergyMunMM, { "MM7_E_truth", "MM7_PDGID" });
 
   // Dimuon Seperation vs Track Energy
-  ret.push_back(df.Histo2D( { Form("SeperationVSTotalEnergy_ST11_%i", icut), Form("%s ; Total Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 0., 100., 60u, 50., 1200. }, "TotalEnergyStraw11", "SeperationDimuonsStraw11"));
-  ret.push_back(df.Histo2D( { Form("SeperationVSTotalEnergy_ST12_%i", icut), Form("%s ; Total Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 0., 100., 60u, 50., 1200. }, "TotalEnergyStraw12", "SeperationDimuonsStraw12"));
-  ret.push_back(df.Histo2D( { Form("SeperationVSMupEnergy_ST11_%i", icut), Form("%s ; Mu_p Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 50., 1200. }, "TrackEnergyStraw11_mup", "SeperationStraw11_mup"));
-  ret.push_back(df.Histo2D( { Form("SeperationVSMunEnergy_ST11_%i", icut), Form("%s ; Mu_n Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 50., 1200. }, "TrackEnergyStraw11_mun", "SeperationStraw11_mun")); 
-  ret.push_back(df.Histo2D( { Form("SeperationVSMupEnergy_ST12_%i", icut), Form("%s ; Mu_p Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 50., 1200. }, "TrackEnergyStraw12_mup", "SeperationStraw12_mup"));
-  ret.push_back(df.Histo2D( { Form("SeperationVSMunEnergy_ST12_%i", icut), Form("%s ; Mu_n Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 50., 1200. }, "TrackEnergyStraw12_mun", "SeperationStraw12_mun"));
+  ret.push_back(df.Histo2D( { Form("SeperationVSTotalEnergy_ST11_%i", icut), Form("%s ; Total Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 0., 100., 60u, 1., 1200. }, "TotalEnergyStraw11", "SeperationDimuonsStraw11"));
+  ret.push_back(df.Histo2D( { Form("SeperationVSTotalEnergy_ST12_%i", icut), Form("%s ; Total Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 0., 100., 60u, 1., 1200. }, "TotalEnergyStraw12", "SeperationDimuonsStraw12"));
+  ret.push_back(df.Histo2D( { Form("SeperationVSMupEnergy_ST11_%i", icut), Form("%s ; Mu_p Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 1., 1200. }, "TrackEnergyStraw11_mup", "SeperationStraw11_mup"));
+  ret.push_back(df.Histo2D( { Form("SeperationVSMunEnergy_ST11_%i", icut), Form("%s ; Mu_n Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 1., 1200. }, "TrackEnergyStraw11_mun", "SeperationStraw11_mun")); 
+  ret.push_back(df.Histo2D( { Form("SeperationVSMupEnergy_ST12_%i", icut), Form("%s ; Mu_p Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 1., 1200. }, "TrackEnergyStraw12_mup", "SeperationStraw12_mup"));
+  ret.push_back(df.Histo2D( { Form("SeperationVSMunEnergy_ST12_%i", icut), Form("%s ; Mu_n Energy [GeV]; Seperation [mm]", cutName.c_str()), 60u, 1., 100., 60u, 1., 1200. }, "TrackEnergyStraw12_mun", "SeperationStraw12_mun"));
   
   ret.push_back(df.Histo1D( { Form("Straw11_TotalEnergy_%i", icut), "Straw11 Total Energy", 100u, 0., 100.}, "TotalEnergyStraw11"));
   ret.push_back(df.Histo1D( { Form("Straw11_Energy_mup_%i", icut), "Straw11 mu_p Energy", 100u, 1., 100.}, "TrackEnergyStraw11_mup"));

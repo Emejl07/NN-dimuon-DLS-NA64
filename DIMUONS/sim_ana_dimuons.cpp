@@ -369,7 +369,7 @@ bool physTrigger(RVecD &PRS_ene, RVecD &ECAL_ene) {
       sECAL_ene += ECAL_ene[id]; //Threshold on ECAL1 only
     }
   }
-  return ((sECAL_ene < 76)  && (sPS_ene > 0.4)); // < 76, > 0.4
+  return ((sECAL_ene < 74.8)  && (sPS_ene > 0.4)); // < 76, > 0.4
 }
 
 /* HC2muon cut

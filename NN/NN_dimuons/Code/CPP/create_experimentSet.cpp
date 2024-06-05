@@ -446,6 +446,9 @@ void create_experimentSet(string fIn = "", string fOut = "") {
     d2 = d2.Define("mpST11", mpStrawHits, { "ST12x" });
     d2 = d2.Define("mpST12", mpStrawHits, { "ST11x" });
     d2 = d2.Define("strawSelection", strawSelection, { "ST12x" });
+    d2 = d2.Define("veto01", "(VETO_enePMT_T[0]+VETO_enePMT_T[1])*0.5");
+    d2 = d2.Define("veto23", "(VETO_enePMT_T[2]+VETO_enePMT_T[3])*0.5");
+    d2 = d2.Define("veto45", "(VETO_enePMT_T[4]+VETO_enePMT_T[5])*0.5");
 
     auto dF1 = d2.Filter(filterTriggerTime, { "masterT" });
     auto dF2 = dF1.Filter(filterSRD, { "SRD_eneT" });
@@ -470,6 +473,6 @@ void create_experimentSet(string fIn = "", string fOut = "") {
     ROOT::RDF::RSnapshotOptions opts;
     opts.fMode = "update";
     opts.fOverwriteIfExists = true;
-    dF16.Snapshot("training_set", fnameOut.c_str(), {"HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection" }, opts);
+    dF16.Snapshot("training_set", fnameOut.c_str(), {"HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45" }, opts);
 
 }

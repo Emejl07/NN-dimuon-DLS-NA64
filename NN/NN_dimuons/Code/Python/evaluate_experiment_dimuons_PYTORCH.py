@@ -5,6 +5,7 @@ import uproot
 import seaborn as sns
 import torch
 from NN_dimuons_pyTorch import NeuralNetwork
+from DNN_dimuons_pyTorch import DeepNeuralNetwork
 
 def load_data(file_path, treeName):
     # Load data from ROOT file using uproot
@@ -49,7 +50,9 @@ def main():
         predictions = model(X_tensor).numpy()
 
     # Filter predicted dimuon events (label = 1)
-    dimuon_indices = predictions[:, 0] > 0.5
+    treshold = 0.5
+    dimuon_indices = predictions[:, 0] > treshold
+
     dimuon_features = features[dimuon_indices]
     selected_indices = indices[dimuon_indices]
     print(r"Number of $\mu\mu$: %2i", len(dimuon_features))
@@ -91,4 +94,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

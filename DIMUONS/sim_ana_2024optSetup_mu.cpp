@@ -780,7 +780,7 @@ double SeperationMunST(vector<double> &strawX, vector<int> &straw_PDGID) {
       }
     }
   }
-  return abs(mun_X + 750.);
+  return abs(mun_X + 726.);
 }
 
 double SeperationMupST(vector<double> &strawX, vector<int> &straw_PDGID) {
@@ -795,7 +795,7 @@ double SeperationMupST(vector<double> &strawX, vector<int> &straw_PDGID) {
       }
     }
   }
-  return abs(mup_X + 750.);
+  return abs(mup_X + 726.);
 }
 
 double TrackEnergyDimuonsST(vector<double> &Straw_TrackEnergy, vector<int> &straw_PDGID) {

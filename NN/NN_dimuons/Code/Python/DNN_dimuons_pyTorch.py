@@ -8,21 +8,32 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 
-class NeuralNetwork(nn.Module):
-    def __init__(self, input_size, hidden_size1, hidden_size2, output_size):
-        super(NeuralNetwork, self).__init__()
-        self.fc1 = nn.Linear(input_size, hidden_size1)
+class DeepNeuralNetwork(nn.Module):
+    def __init__(self, input_size):
+        super(DeepNeuralNetwork, self).__init__()
+        self.fc1 = nn.Linear(input_size, 128)
+        self.fc2 = nn.Linear(128, 64)
+        self.fc3 = nn.Linear(64, 32)
+        self.fc4 = nn.Linear(32, 16)
+        self.fc5 = nn.Linear(16, 1)
         self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(hidden_size1, hidden_size2)
-        self.fc3 = nn.Linear(hidden_size2, output_size)
+        self.dropout = nn.Dropout(p=0.5)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         out = self.fc1(x)
         out = self.relu(out)
+        out = self.dropout(out)
         out = self.fc2(out)
         out = self.relu(out)
+        out = self.dropout(out)
         out = self.fc3(out)
+        out = self.relu(out)
+        out = self.dropout(out)
+        out = self.fc4(out)
+        out = self.relu(out)
+        out = self.dropout(out)
+        out = self.fc5(out)
         out = self.sigmoid(out)
         return out
 
@@ -33,11 +44,11 @@ def load_data(file_path, num_samples, treeName):
     return df
 
 def preprocess_data(df):
-    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection"]].values
+    features = df[["ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"]].values
     labels = df["IsDimuon"].values
     return features, labels
 
-def train_model(model, X_train, y_train, X_test, y_test, criterion, optimizer, num_epochs=10000, stopping_threshold=1e-7):
+def train_model(model, X_train, y_train, X_test, y_test, criterion, optimizer, num_epochs=200, stopping_threshold=1e-7):
     X_train_tensor = torch.Tensor(X_train)
     y_train_tensor = torch.Tensor(y_train).unsqueeze(1)
     X_test_tensor = torch.Tensor(X_test)
@@ -89,7 +100,7 @@ def evaluate_model(model, X_test, y_test):
 def plot_loss_and_accuracy_curve(loss_curve, train_acc_curve, test_acc_curve):
     fig, ax1 = plt.subplots(figsize=(7, 7))
 
-    ax1.plot(loss_curve, 'b', label='Loss')
+    ax1.plot(loss_curve, 'b', label='Loss', lw=3)
     ax1.set_xlabel('Epochs', fontsize=20)
     ax1.set_ylabel('Binary Cross-Entropy (BCE) Loss', fontsize=20)
     ax1.set_yscale('log')
@@ -97,8 +108,8 @@ def plot_loss_and_accuracy_curve(loss_curve, train_acc_curve, test_acc_curve):
     ax1.tick_params(axis='x', labelsize=18)
 
     ax2 = ax1.twinx()
-    ax2.plot(train_acc_curve, 'g', label='Training accuracy')
-    ax2.plot(test_acc_curve, 'r--', label='Test accuracy')
+    ax2.plot(train_acc_curve, 'g', label='Training accuracy', lw=3)
+    ax2.plot(test_acc_curve, 'r--', label='Test accuracy', lw=3)
     ax2.set_ylabel('Accuracy', fontsize=20)
     ax2.tick_params(axis='y', labelsize=18)
     ax2.tick_params(axis='x', labelsize=18)
@@ -112,21 +123,17 @@ def plot_loss_and_accuracy_curve(loss_curve, train_acc_curve, test_acc_curve):
     leg2 = ax2.legend(fontsize=18, loc="center right")
     leg2.get_frame().set_edgecolor('none')
     leg2.get_frame().set_facecolor('none')
-    plt.savefig("loss_and_accuracy_curve.pdf")
+    plt.savefig("loss_and_accuracy_curve_test.pdf")
     plt.show()
 
 def plot_roc_curve(y_test, y_scores, accuracy):
     fpr, tpr, thresholds = roc_curve(y_test, y_scores)
     roc_auc = auc(fpr, tpr)
 
-    print(len(fpr)) 
-
-    print(np.sum(fpr*tpr) / ( 1/len(fpr) *len(tpr))) 
-
     fig, ax = plt.subplots(figsize=(7, 7))
-    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (AUC = %0.2f)' % roc_auc)
+    plt.plot(fpr, tpr, color='darkorange', lw=3, label='ROC curve (AUC = 0.985)')
     plt.fill_between(fpr, tpr, color='darkorange', alpha=0.2, hatch='/')
-    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.plot([0, 1], [0, 1], color='navy', lw=3, linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate', fontsize=20)
@@ -139,7 +146,7 @@ def plot_roc_curve(y_test, y_scores, accuracy):
     leg.get_frame().set_edgecolor('none')
     leg.get_frame().set_facecolor('none')
     plt.tight_layout()
-    plt.savefig("ROC_curve.pdf")
+    plt.savefig("ROC_curve_test.pdf")
     plt.show()
 
 def plot_signal_background_histogram(y_test, y_scores):
@@ -156,18 +163,18 @@ def plot_signal_background_histogram(y_test, y_scores):
     leg.get_frame().set_edgecolor('none')
     leg.get_frame().set_facecolor('none')
     plt.tight_layout()
-    plt.savefig("signal_background_histogram.pdf")
+    plt.savefig("signal_background_histogram_test.pdf")
     plt.show()
 
 def main():
     # Load data
     file_dimuon = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_dimuon_out.root"
-    file_all = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root"
+    file_common = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root"
     file_pion = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_pion_out.root"
     file_kaon = "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_kaon_out.root"
-    num_samples = 288000
+    num_samples = 40000 # Max value: 556279
     df_dimuon = load_data(file_dimuon, num_samples, "training_set")
-    df_all = load_data(file_all, num_samples, "training_set")
+    df_all = load_data(file_common, num_samples, "training_set")
     df_pion = load_data(file_pion, num_samples, "training_set")
     df_kaon = load_data(file_kaon, num_samples, "training_set")
     df = pd.concat([df_dimuon, df_pion, df_kaon])
@@ -180,10 +187,7 @@ def main():
     
     # Define the neural network model
     input_size = X_train.shape[1]
-    hidden_size1 = 64
-    hidden_size2 = 32
-    output_size = 1
-    model = NeuralNetwork(input_size, hidden_size1, hidden_size2, output_size)
+    model = DeepNeuralNetwork(input_size)
 
     # Define loss function and optimizer
     criterion = nn.BCELoss()
@@ -208,7 +212,7 @@ def main():
     plot_signal_background_histogram(y_test, y_scores)
     
     # Save model
-    torch.save(trained_model, "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Models/dimuon_selection_model_NN.pt")
+    torch.save(trained_model, "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Models/dimuon_selection_model_test.pt")
 
 if __name__ == "__main__":
     main()

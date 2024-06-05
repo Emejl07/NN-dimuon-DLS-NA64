@@ -1,0 +1,33 @@
+# HTCondor queues
+# espresso     = 20 minutes, microcentury = 1 hour, longlunch    = 2 hours, workday      = 8 hours, tomorrow     = 1 day, testmatch    = 3 days, nextweek     = 1 week
+
+notify_user = ezaya@cern.ch
+# Never, Error, Complete, Always
+notification = Error
+
+#define computing group
++AccountingGroup = "group_u_NA64.users"
+
+#switch off the transfering of output file
+transfer_output_files = ""
+
+JOBNAME = 01062024_2023setup
+output = /afs/cern.ch/work/e/ezaya/public/sim_data_verbose//output/$(JOBNAME).$(ClusterId).$(ProcId).out
+error = /afs/cern.ch/work/e/ezaya/public/sim_data_verbose//error/$(JOBNAME).$(ClusterId).$(ProcId).err
+log = /afs/cern.ch/work/e/ezaya/public/sim_data_verbose//log/$(JOBNAME).$(ClusterId).log
+
++JobFlavour = "tomorrow"
+
+
+#requirement for the simulation
+requirements = (OpSysAndVer =?= "AlmaLinux9") && (Machine =!= LastRemoteHost)
+
+# No more emails
+notification=never
+
+executable = geant4_run.sh 
+
+arguments = $(JOBNAME)_$(ClusterId)_$(ProcId)
+
+queue 1000
+

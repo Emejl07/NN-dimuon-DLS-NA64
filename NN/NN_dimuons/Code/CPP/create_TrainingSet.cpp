@@ -92,11 +92,11 @@ int strawSelection(vector<double> &straw11X){
   if(mpST11 == 0) return -30; // No hit
   
   if(mpST11 == 1) { // Single hit
-    if (straw11X[0] > 0) return -10; // mu-
+    if (straw11X[0] > -150) return -10; // mu-
     else return 10; // mu+
   }
   if(mpST11 == 2){ // two hit
-    if (straw11X[0] > 0 && straw11X[1] < 0 || straw11X[0] < 0 && straw11X[1] > 0) return 20;
+    if (straw11X[0] > -150 && straw11X[1] < -150 || straw11X[0] < -150 && straw11X[1] > -150) return 20;
     else return -20;
   }
   else return 30; // More than 2 hits
@@ -109,7 +109,8 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
     // DIMUON EVENTS DATA
     //
 
-    std::string fnameIn = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/09042024_TrueDetector_beforeMagnet.root" : fIn;  // Data set of Dimuons
+    //std::string fnameIn = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/09042024_TrueDetector_beforeMagnet.root" : fIn;  // Data set of Dimuons 01052024_Mag185Mag215
+    std::string fnameIn = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/01052024_Mag185Mag215.root" : fIn;  // Data set of Dimuons 01052024_Mag185Mag215
     std::string fnameOut = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_dimuon_out.root" : fOut;
 
     // Define the RDataFrame with the input ROOT file
@@ -133,13 +134,16 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
                  .Define("eH2_11", "eH_PDS[22]")
                  .Define("mpST11", mpStrawHits, { "Strawx11" })
                  .Define("mpST12", mpStrawHits, { "Strawx12" })
-                 .Define("strawSelection", strawSelection, { "Strawx11" });
+                 .Define("strawSelection", strawSelection, { "Strawx11" })
+                 .Define("veto01", "VETO[0]")
+                 .Define("veto23", "VETO[1]")
+                 .Define("veto45", "VETO[2]");
 
     // Take a snapshot of the processed dataframe
     ROOT::RDF::RSnapshotOptions opts;
     opts.fMode = "update";
     opts.fOverwriteIfExists = true;
-    dOut_dimuon.Snapshot("training_set", fnameOut.c_str(), {"IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection" }, opts);
+    dOut_dimuon.Snapshot("training_set", fnameOut.c_str(), {"IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45"  }, opts);
 
     //
     // PION EVENTS DATA
@@ -170,10 +174,13 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
                  .Define("mpST11", mpStrawHits, { "Strawx11" })
                  .Define("mpST12", mpStrawHits, { "Strawx12" })
                  .Define("strawSelection", strawSelection, { "Strawx11" })
-                 .Define("Weight", "AWeight");
+                 .Define("Weight", "AWeight")
+                 .Define("veto01", "VETO[0]")
+                 .Define("veto23", "VETO[1]")
+                 .Define("veto45", "VETO[2]");
 
     // Take a snapshot of the processed dataframe
-    dOut_pion.Snapshot("training_set", fnameOut_pion.c_str(), { "IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "Weight" }, opts);
+    dOut_pion.Snapshot("training_set", fnameOut_pion.c_str(), { "IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "Weight", "veto01", "veto23", "veto45"  }, opts);
 
     //
     // KAON EVENTS DATA
@@ -205,16 +212,19 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
                  .Define("mpST11", mpStrawHits, { "Strawx11" })
                  .Define("mpST12", mpStrawHits, { "Strawx12" })
                  .Define("strawSelection", strawSelection, { "Strawx11" })
-                 .Define("Weight", "AWeight");
+                 .Define("Weight", "AWeight")
+                 .Define("veto01", "VETO[0]")
+                 .Define("veto23", "VETO[1]")
+                 .Define("veto45", "VETO[2]");
 
     // Take a snapshot of the processed dataframe
-    dOut_kaon.Snapshot("training_set", fnameOut_kaon.c_str(), { "IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "Weight" }, opts);
+    dOut_kaon.Snapshot("training_set", fnameOut_kaon.c_str(), { "IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "Weight", "veto01", "veto23", "veto45" }, opts);
 
     //
     // COMMON EVENTS: NO HITS IN HCAL
     //
     
-    std::string fnameIn_all = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/02042024_standard.root" : fIn; // Dataset of all events, not only dimuons
+    std::string fnameIn_all = (fIn == "") ? "/eos/user/e/ezaya/simulation_output/DIMUONS/data/25032024_standardRun2.root" : fIn; // Dataset of all events, not only dimuons
     std::string fnameOut_all = (fOut == "") ? "/eos/user/e/ezaya/simulation_output/NN/NN_dimuons/Data/Output/TrainingSet_common_out.root" : fOut; // Create a seperate out-file, seperating the dimuon out-file.
 
     // Define the RDataFrame with the input ROOT file
@@ -236,8 +246,11 @@ void create_TrainingSet(string fIn = "", string fOut = "") {
                  .Define("eH2_11", "eH_PDS[22]")
                  .Define("mpST11", mpStrawHits, { "Strawx11" })
                  .Define("mpST12", mpStrawHits, { "Strawx12" })
-                 .Define("strawSelection", strawSelection, { "Strawx11" });
+                 .Define("strawSelection", strawSelection, { "Strawx11" })
+                 .Define("veto01", "VETO[0]")
+                 .Define("veto23", "VETO[1]")
+                 .Define("veto45", "VETO[2]");
 
     // Take a snapshot of the processed dataframe
-    dOut_all.Snapshot("training_set", fnameOut_all.c_str(), { "IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection" }, opts);
+    dOut_all.Snapshot("training_set", fnameOut_all.c_str(), { "IsDimuon", "HCAL012", "HCAL0", "HCAL1", "HCAL2", "ECAL", "eH0_11", "eH1_11", "eH2_11", "mpST11", "mpST12", "strawSelection", "veto01", "veto23", "veto45" }, opts);
 }
